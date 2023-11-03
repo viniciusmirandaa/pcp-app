@@ -1,0 +1,91 @@
+WindowManager:
+    LoginScreen:
+    WorkProductionScreen:
+
+
+<LoginScreen>:
+    name: "login"
+
+    BoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: 'PCP'
+            left_action_items: [['menu', lambda x: x]]
+            right_action_items: [['dots-vertical', lambda x: x]]
+        TelaLogin:
+
+<SenhaCard>:
+    orientation: 'vertical'
+    pos_hint: {"center_x": .5, "center_y": .5}
+    size_hint: .7, .6
+
+    MDBoxLayout:
+        size_hint_y: 0.15
+        padding: [25, 0, 0, 5]
+        md_bg_color: app.theme_cls.primary_color
+
+        MDLabel:
+            text: 'Mudar Senha'
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+        MDIconButton:
+            theme_text_color: 'Custom'
+            icon: 'close'
+            text_color: 1, 1, 1, 1
+            on_release: root.fechar()
+
+    MDFloatLayout:
+        MDTextField:
+            size_hint_x: .9
+            pos_hint: {"center_x": .5, "center_y": .8}
+            hint_text: 'Código enviado por e-mail'
+
+        MDTextField:
+            size_hint_x: .9
+            pos_hint: {"center_x": .5, "center_y": .6}
+            hint_text: 'Nova Senha:'
+
+        MDTextField:
+            size_hint_x: .9
+            pos_hint: {"center_x": .5, "center_y": .4}
+            hint_text: 'Confirmar nova senha:'
+
+        ButtonFocus:
+            size_hint_x: .4
+            pos_hint: {"center_x": .5, "center_y": .2}
+            text: 'Salvar'
+
+<TelaLogin>:
+    MDIconButton:
+        icon: 'language-python'
+        pos_hint: {"center_x": .5, "center_y": .8}
+        icon_size: '75sp'
+    MDTextField:
+        id: email
+        size_hint_x: .9
+        hint_text: 'Email:'
+        pos_hint: {"center_x": .5, "center_y": .6}
+    MDTextField:
+        id: senha
+        size_hint_x: .9
+        hint_text: 'Senha:'
+        pos_hint: {"center_x": .5, "center_y": .5}
+    ButtonFocus:
+        size_hint_x: .9
+        pos_hint: {"center_x": .5, "center_y": .4}
+        text: 'Login'
+        on_release: root.on_release(root.ids.email.text, root.ids.senha.text, "work_production")
+    MDTextButton:
+        text: 'Redefinir senha!'
+        pos_hint: {"center_x": .5, "center_y": .3}
+        on_release: root.abrir_card()
+
+<WorkProductionScreen>:
+    name: "work_production"
+
+    BoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: 'Ordem de Produção'
+            left_action_items: [['menu', lambda x: x]]
+            right_action_items: [['dots-vertical', lambda x: x]]
