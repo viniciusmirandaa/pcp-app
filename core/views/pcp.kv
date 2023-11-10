@@ -1,18 +1,13 @@
 WindowManager:
     LoginScreen:
     WorkProductionScreen:
+    WorkOrderScreen:
 
-
+# Tela Login
 <LoginScreen>:
     name: "login"
 
-    BoxLayout:
-        orientation: 'vertical'
-        MDTopAppBar:
-            title: 'PCP'
-            left_action_items: [['menu', lambda x: x]]
-            right_action_items: [['dots-vertical', lambda x: x]]
-        TelaLogin:
+    TelaLogin:
 
 <SenhaCard>:
     orientation: 'vertical'
@@ -50,7 +45,7 @@ WindowManager:
             pos_hint: {"center_x": .5, "center_y": .4}
             hint_text: 'Confirmar nova senha:'
 
-        ButtonFocus:
+        MDRaisedButton:
             size_hint_x: .4
             pos_hint: {"center_x": .5, "center_y": .2}
             text: 'Salvar'
@@ -65,21 +60,34 @@ WindowManager:
         size_hint_x: .9
         hint_text: 'Email:'
         pos_hint: {"center_x": .5, "center_y": .6}
+        helper_text: ''
+        helper_text_mode: "on_error"
     MDTextField:
         id: senha
         size_hint_x: .9
         hint_text: 'Senha:'
         pos_hint: {"center_x": .5, "center_y": .5}
-    ButtonFocus:
+        password: True
+        helper_text: ''
+        helper_text_mode: "on_error"
+    MDIconButton:
+        id: icon_eye
+        icon: "eye-off"
+        pos_hint: {"center_x": .93, "center_y": .5}
+        on_press:root.show_password()
+    MDRaisedButton:
         size_hint_x: .9
         pos_hint: {"center_x": .5, "center_y": .4}
         text: 'Login'
-        on_release: root.on_release(root.ids.email.text, root.ids.senha.text, "work_production")
+        on_release:
+            root.login(root.ids.email.text, root.ids.senha.text)
+            app.root.current = root.get_screen()
     MDTextButton:
         text: 'Redefinir senha!'
         pos_hint: {"center_x": .5, "center_y": .3}
         on_release: root.abrir_card()
 
+# Tela Ordem de Produção
 <WorkProductionScreen>:
     name: "work_production"
 
@@ -87,5 +95,35 @@ WindowManager:
         orientation: 'vertical'
         MDTopAppBar:
             title: 'Ordem de Produção'
-            left_action_items: [['menu', lambda x: x]]
-            right_action_items: [['dots-vertical', lambda x: x]]
+        WorkProduction:
+
+<WorkProduction>:
+    MDTextField:
+        id: id_text_field
+        text: ""
+        pos_hint: {"center_x": 1000, "center_y": 1000}
+    ScrollView:
+        id: scroll_work
+        MDList:
+            id: production_order_list
+
+
+# Tela Ordem de Serviço
+<WorkOrderScreen>:
+    name: "work_order"
+
+#    BoxLayout:
+#        orientation: 'vertical'
+#        MDTopAppBar:
+#            title: 'Ordem de Serviço'
+    MDRaisedButton:
+        text: "Create simple snackbar"
+        on_release: Snackbar(text="This is a snackbar!", snackbar_x="10dp", snackbar_y="10dp", size_hint_x=(Window.width - (dp(10) * 2)) / Window.width).open()
+        pos_hint: {"center_x": .5, "center_y": .5}
+    WorkOrder:
+
+<WorkOrder>:
+    ScrollView:
+        id: scroll_service_order
+        MDList:
+            id: service_order_list
